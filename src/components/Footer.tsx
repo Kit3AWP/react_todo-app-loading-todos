@@ -1,12 +1,28 @@
-import { Todo } from '../types/Todo';
+import { FilterType, Todo } from '../types/Types';
 
 interface Props {
   todos: Todo[];
-  filter: string;
-  setFilter: (filter: string) => void;
+  filter: FilterType;
+  setFilter: (filter: FilterType) => void;
 }
 
 export const Footer: React.FC<Props> = ({ todos, filter, setFilter }) => {
+  const filterLinks = [
+    { type: FilterType.ALL, title: 'All', cy: 'FilterLinkAll', href: '#/' },
+    {
+      type: FilterType.ACTIVE,
+      title: 'Active',
+      cy: 'FilterLinkActive',
+      href: '#/active',
+    },
+    {
+      type: FilterType.COMPLETED,
+      title: 'Completed',
+      cy: 'FilterLinkCompleted',
+      href: '#/completed',
+    },
+  ];
+
   return (
     <footer className="todoapp__footer" data-cy="Footer">
       <span className="todo-count" data-cy="TodosCounter">
@@ -14,41 +30,20 @@ export const Footer: React.FC<Props> = ({ todos, filter, setFilter }) => {
       </span>
 
       <nav className="filter" data-cy="Filter">
-        <a
-          href="#/"
-          className={`filter__link ${filter === 'all' ? 'selected' : ''}`}
-          data-cy="FilterLinkAll"
-          onClick={event => {
-            event.preventDefault();
-            setFilter('all');
-          }}
-        >
-          All
-        </a>
-
-        <a
-          href="#/active"
-          className={`filter__link ${filter === 'active' ? 'selected' : ''}`}
-          data-cy="FilterLinkActive"
-          onClick={event => {
-            event.preventDefault();
-            setFilter('active');
-          }}
-        >
-          Active
-        </a>
-
-        <a
-          href="#/completed"
-          className={`filter__link ${filter === 'completed' ? 'selected' : ''}`}
-          data-cy="FilterLinkCompleted"
-          onClick={event => {
-            event.preventDefault();
-            setFilter('completed');
-          }}
-        >
-          Completed
-        </a>
+        {filterLinks.map(link => (
+          <a
+            key={link.type}
+            href={link.href}
+            className={`filter__link ${filter === link.type ? 'selected' : ''}`}
+            data-cy={link.cy}
+            onClick={event => {
+              event.preventDefault();
+              setFilter(link.type);
+            }}
+          >
+            {link.title}
+          </a>
+        ))}
       </nav>
 
       <button

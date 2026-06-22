@@ -1,4 +1,4 @@
-import { Todo } from '../types/Todo';
+import { Todo } from '../types/Types';
 import { TodoItem } from './TodoItem';
 
 interface Props {

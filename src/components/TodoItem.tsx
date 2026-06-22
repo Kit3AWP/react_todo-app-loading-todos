@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { Todo } from '../types/Todo';
+import { Todo } from '../types/Types';
 
 interface Props {
   todo: Todo;
